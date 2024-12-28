@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:replace="~{layout :: title('Редактирай пациент')}"></title>
+</head>
+
+<div layout:fragment="content" class="p-6 bg-gray-50 min-h-64">
+    <form th:action="@{|/patients/edit/${patient.id}|}" method="post" th:object="${patient}" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow">
+        <h1 class="text-2xl font-bold mb-4">Редактирай пациент</h1>
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="mb-4">
+            <label for="firstName" class="block text-sm font-medium text-gray-700">Име</label>
+            <input id="firstName" type="text" th:field="*{firstName}"
+                   th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('firstName') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Въведи име" />
+            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-sm text-red-600 mt-1 block"></span>
+        </div>
+
+        <div class="mb-4">
+            <label for="lastName" class="block text-sm font-medium text-gray-700">Фамилия</label>
+            <input id="lastName" type="text" th:field="*{lastName}"
+                   th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('lastName') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Въведи фамилия" />
+            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-sm text-red-600 mt-1 block"></span>
+        </div>
+
+        <div class="mb-4">
+            <label for="username" class="block text-sm font-medium text-gray-700">Потребителско име</label>
+            <input id="username" type="text" th:field="*{username}"
+                   th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('username') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Въведи потребителско име" />
+            <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-sm text-red-600 mt-1 block"></span>
+        </div>
+
+        <div class="mb-4">
+            <label for="egn" class="block text-sm font-medium text-gray-700">ЕГН</label>
+            <input id="egn" type="text" th:field="*{egn}"
+                   th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('egn') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Въведи ЕГН" />
+            <span th:if="${#fields.hasErrors('egn')}" th:errors="*{egn}" class="text-sm text-red-600 mt-1 block"></span>
+        </div>
+
+        <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700">Парола</label>
+            <input id="password" type="password" th:field="*{password}"
+                   th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('password') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Въведи парола" />
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-sm text-red-600 mt-1 block"></span>
+        </div>
+
+        <div class="mb-4">
+            <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Потвърди парола</label>
+            <input id="confirmPassword" type="password" th:field="*{confirmPassword}"
+                   th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('confirmPassword') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" placeholder="Потвърди парола" />
+            <span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="text-sm text-red-600 mt-1 block"></span>
+        </div>
+
+        <div class="mb-4">
+            <label for="generalPractitionerId" class="block text-sm font-medium text-gray-700">GP</label>
+            <select id="generalPractitionerId" th:field="*{generalPractitionerId}"
+                    th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('generalPractitionerId') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Избери GP</option>
+                <option th:each="generalPractitioner : ${generalPractitioners}" th:value="${generalPractitioner.id}" th:text="${generalPractitioner.getFirstName()}"></option>
+            </select>
+            <span th:if="${#fields.hasErrors('generalPractitionerId')}" th:errors="*{generalPractitionerId}" class="text-sm text-red-600 mt-1 block"></span>
+        </div>
+
+        <div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                <i class="fas fa-edit"></i> Редактирай пациент
+            </button>
+        </div>
+    </form>
+</div>
+</html>

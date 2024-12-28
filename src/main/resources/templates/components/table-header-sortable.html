@@ -1,0 +1,5 @@
+<th th:fragment="sortableHeader(pageableList, route, fieldName, text, extraParams)" class="px-4 py-2 text-left text-sm font-medium text-gray-700">
+    <a class="text-blue-600 hover:text-blue-800 underline" th:text="${text}"
+       th:href="${utils.generateSortUrl(pageableList.pageable, route, fieldName, extraParams)}">
+    </a>
+</th>

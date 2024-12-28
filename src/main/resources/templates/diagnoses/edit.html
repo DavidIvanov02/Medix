@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:replace="~{layout :: title('Редактирай диагноза')}"></title>
+</head>
+
+<div layout:fragment="content" class="p-6 bg-gray-50 min-h-64">
+    <form th:action="@{|/diagnoses/edit/${diagnose.id}|}" method="post" th:object="${diagnose}" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow">
+        <h1 class="text-2xl font-bold mb-4">Редактирай диагноза</h1>
+        <input type="hidden" th:field="*{id}" />
+        <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Име</label>
+            <input
+                    id="name"
+                    type="text"
+                    th:field="*{name}"
+                    th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('name') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+                    placeholder="Въведи име"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-sm text-red-600 mt-1 block"></span>
+        </div>
+        <div class="mb-4">
+            <label for="description" class="block text-sm font-medium text-gray-700">Описание</label>
+            <textarea
+                    id="description"
+                    th:field="*{description}"
+                    th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('description') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+                    placeholder="Въведи описание"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"></textarea>
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-sm text-red-600 mt-1 block"></span>
+        </div>
+        <div>
+            <button
+                    type="submit"
+                    class="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                <i class="fas fa-edit"></i> Редактирай диагноза
+            </button>
+        </div>
+    </form>
+</div>
+</html>

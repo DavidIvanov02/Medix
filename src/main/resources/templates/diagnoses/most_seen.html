@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:replace="~{layout :: title('Често срещани диагнози')}"></title>
+</head>
+
+<div layout:fragment="content" class="p-6 bg-gray-50 min-h-64">
+    <h1 class="text-2xl font-bold mb-4">Често срещани диагнози</h1>
+    <table class="w-full border border-gray-300 bg-white rounded-lg shadow-md">
+        <thead class="bg-gray-100">
+        <tr>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">№</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Име</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Описание</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Брой прегледи</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="diagnoseWithCount : ${diagnosesWithCount}" class="border-t">
+            <td th:text="${diagnoseWithCount.diagnose.id}" class="px-4 py-2 text-sm text-gray-800"></td>
+            <td th:text="${diagnoseWithCount.diagnose.name}" class="px-4 py-2 text-sm text-gray-800"></td>
+            <td th:text="${diagnoseWithCount.diagnose.description}" class="px-4 py-2 text-sm text-gray-800"></td>
+            <td th:text="${diagnoseWithCount.appointmentCount}" class="px-4 py-2 text-sm text-gray-800"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</html>

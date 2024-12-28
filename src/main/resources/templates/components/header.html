@@ -1,0 +1,126 @@
+<header xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <nav class="p-4">
+        <div class="container mx-auto px-4 flex items-center justify-between">
+            <!-- Logo -->
+            <a class="flex items-center" th:href="@{/users}">
+                <img th:src="@{/assets/logo.png}" alt="Logo" class="w-12 h-auto">
+            </a>
+            <!-- Mobile Menu Toggle -->
+            <button class="lg:hidden text-gray-300" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="material-icons">menu</span>
+            </button>
+            <!-- Navigation Links -->
+            <div class="hidden lg:flex items-center space-x-4" id="navbarNav">
+                <ul class="flex flex-col lg:flex-row lg:space-x-6 space-y-2 lg:space-y-0">
+                    <!-- Dropdown -->
+                    <li class="relative">
+                        <a href="#" class="text-gray-300 hover:text-white flex items-center" id="navbarDropdown"
+                           role="button" onclick="toggleDropdown(event, 'dropdownMenu')">
+                            <i class="fas fa-users px-2"></i>Потребители
+                            <svg class="ml-1 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </a>
+                        <ul id="dropdownMenu" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 hidden">
+                            <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DOCTOR')">
+                                <a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" th:href="@{/users}">
+                                    <i class="fas fa-user-friends px-2"></i>Всички
+                                </a>
+                            </li>
+                            <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" th:href="@{/admins}">
+                                    <i class="fas fa-user-shield px-2"></i>Управители
+                                </a>
+                            </li>
+                            <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DOCTOR')">
+                                <a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" th:href="@{/doctors}">
+                                    <i class="fas fa-user-md px-2"></i>Доктори
+                                </a>
+                            </li>
+                            <li sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_DOCTOR')">
+                                <a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" th:href="@{/patients}">
+                                    <i class="fas fa-user-injured px-2"></i>Пациенти
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Static Links -->
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="text-gray-300 hover:text-white" th:href="@{/specialities}">
+                            <i class="fas fa-book-medical px-2"></i>Специалности
+                        </a>
+                    </li>
+                    <li class="relative">
+                        <a href="#" class="text-gray-300 hover:text-white flex items-center" id="diagnosesDropdown"
+                           role="button" onclick="toggleDropdown(event, 'diagnosesMenu')">
+                            <i class="fas fa-notes-medical px-2"></i>Диагнози
+                            <svg class="ml-1 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </a>
+                        <ul id="diagnosesMenu" class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 hidden">
+                            <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" th:href="@{/diagnoses}">
+                                    <i class="fas fa-notes-medical px-2"></i>Всички
+                                </a>
+                            </li>
+                            <li>
+                                <a class="block px-4 py-2 text-gray-700 hover:bg-gray-100" th:href="@{/diagnoses/most_seen}">
+                                    <i class="fas fa-chart-bar px-2"></i>Често срещани
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a class="text-gray-300 hover:text-white" th:href="@{/drugs}">
+                            <i class="fas fa-pills px-2"></i>Лекарства
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-gray-300 hover:text-white" th:href="@{/appointments}">
+                            <i class="fas fa-calendar-check px-2"></i>Прегледи
+                        </a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_PATIENT')">
+                        <a class="text-gray-300 hover:text-white"
+                           th:href="@{/appointments/doctor_appointments_count}">
+                            <i class="fas fa-user-clock px-2"></i>Брой посещения при лекар
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-gray-300 hover:text-white" th:href="@{/leaves}">
+                            <i class="fas fa-briefcase-medical px-2"></i>Болнични
+                        </a>
+                    </li>
+                    <li>
+                        <a class="text-gray-300 hover:text-white" th:href="@{/insurances}">
+                            <i class="fas fa-file-invoice-dollar px-2"></i>Осигуровки
+                        </a>
+                    </li>
+                    <li th:unless="${#authentication.isAuthenticated()}">
+                        <a class="text-gray-300 hover:text-white" th:href="@{/login}">
+                            <i class="fas fa-sign-in-alt px-2"></i>Вход
+                        </a>
+                    </li>
+                    <li th:if="${#authentication.isAuthenticated()}">
+                        <a class="text-gray-300 hover:text-white" th:href="@{/logout}">
+                            <i class="fas fa-sign-out-alt px-2"></i>Изход
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <script>
+        function toggleDropdown(event, dropdownId) {
+            event.preventDefault();
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.classList.toggle('hidden');
+        }
+    </script>
+</header>

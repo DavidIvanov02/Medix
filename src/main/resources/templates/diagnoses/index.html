@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title th:replace="~{layout :: title('Диагнози')}"></title>
+</head>
+
+<div layout:fragment="content" class="p-6 bg-gray-50 min-h-64">
+    <h1 class="text-2xl font-bold mb-4">Диагнози</h1>
+    <a
+            sec:authorize="hasRole('ROLE_ADMIN')"
+            th:href="@{/diagnoses/create}"
+            class="inline-block bg-blue-600 text-white py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mb-4">
+        <i class="fas fa-plus mr-2"></i> Добави диагноза
+    </a>
+    <table class="w-full border border-gray-300 bg-white rounded-lg shadow-md">
+        <thead class="bg-gray-100">
+        <tr>
+            <th th:replace="~{components/table-header-sortable :: sortableHeader(${diagnoses}, '/diagnoses', 'id', '№', null)}" class="px-4 py-2 text-left text-sm font-medium text-gray-700"></th>
+            <th th:replace="~{components/table-header-sortable :: sortableHeader(${diagnoses}, '/diagnoses', 'name', 'Име', null)}" class="px-4 py-2 text-left text-sm font-medium text-gray-700"></th>
+            <th th:replace="~{components/table-header-sortable :: sortableHeader(${diagnoses}, '/diagnoses', 'description', 'Описание', null)}" class="px-4 py-2 text-left text-sm font-medium text-gray-700"></th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="diagnose : ${diagnoses.content}" class="border-t">
+            <td th:text="${diagnose.id}" class="px-4 py-2 text-sm text-gray-800"></td>
+            <td th:text="${diagnose.name}" class="px-4 py-2 text-sm text-gray-800"></td>
+            <td th:text="${diagnose.description}" class="px-4 py-2 text-sm text-gray-800"></td>
+            <td class="px-4 py-2 text-sm text-gray-800">
+                <a
+                        sec:authorize="hasRole('ROLE_ADMIN')"
+                        th:href="@{/diagnoses/edit/{id}(id=${diagnose.id})}"
+                        class="inline-block bg-blue-500 text-white py-1 px-3 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    <i class="fas fa-edit"></i> Редакция
+                </a>
+                <a
+                        sec:authorize="hasRole('ROLE_ADMIN')"
+                        th:href="@{/diagnoses/delete/{id}(id=${diagnose.id})}"
+                        class="inline-block bg-red-500 text-white py-1 px-3 rounded-md shadow hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 ml-2">
+                    <i class="fas fa-trash-alt"></i> Изтриване
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:include="~{components/pagination :: pagination(${diagnoses}, '/diagnoses', null)}" class="mt-4"></div>
+</div>
+</html>

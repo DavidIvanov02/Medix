@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:replace="~{layout :: title('404 Грешка')}"></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="flex items-center justify-center h-screen bg-slate-900 text-gray-200">
+<div class="container mx-auto px-4">
+    <div class="max-w-md mx-auto bg-slate-800 rounded-lg shadow-lg overflow-hidden">
+        <div class="text-center p-6">
+            <h1 class="text-5xl font-bold text-red-500 mb-4">
+                <i class="fas fa-exclamation-triangle"></i> Опа!
+            </h1>
+            <p class="text-lg mb-2">Получи се грешка. Опитайте отново.</p>
+            <hr class="border-slate-700 my-4">
+            <p class="text-sm">
+                <strong>Грешка:</strong> <span th:text="${message}">Нещо се обърка!</span>
+            </p>
+            <a th:href="@{/users}"
+               class="mt-4 inline-block px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded shadow transition duration-300">
+                <i class="fas fa-arrow-left"></i> Обратно към началото
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

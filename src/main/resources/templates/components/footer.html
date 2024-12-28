@@ -1,0 +1,77 @@
+<footer xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="grid sm:grid-cols-12 gap-8 py-8 md:py-12">
+            <div class="sm:col-span-12 lg:col-span-4 order-1 lg:order-none">
+                <div class="h-full flex flex-col sm:flex-row lg:flex-col justify-between">
+                    <div class="mb-4 sm:mb-0">
+                        <div class="mb-4">
+                            <a class="flex items-center" th:href="@{/users}">
+                                <img th:src="@{/assets/logo.png}" width="60" height="60" alt="Logo">
+                            </a>
+                        </div>
+                        <div class="text-sm text-slate-400">
+                            &copy; 2024-2025 Medix <span class="text-slate-500">-</span> Всички права запазени.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sm:col-span-6 md:col-span-3 lg:col-span-2">
+                <h6 class="text-sm text-slate-50 font-medium mb-2">Полезно</h6>
+                <ul class="text-sm space-y-2">
+                    <li>
+                        <a
+                                class="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out"
+                                href="/appointments">Прегледи</a>
+                    </li>
+                    <li>
+                        <a
+                                class="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out"
+                                href="/leaves">Болнични</a>
+                    </li>
+                    <li>
+                        <a
+                                class="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out"
+                                href="/insurances">Осигуровки</a>
+                    </li>
+                </ul>
+            </div>
+            <div sec:authorize="hasRole('ROLE_ADMIN')" class="sm:col-span-6 md:col-span-3 lg:col-span-2">
+                <h6 class="text-sm text-slate-50 font-medium mb-2">Ресурси</h6>
+                <ul class="text-sm space-y-2">
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a
+                                class="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out"
+                                href="/specialities">Специалности</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a
+                                class="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out"
+                                href="/diagnoses">Диагнози</a>
+                    </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a
+                                class="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out"
+                                href="/drugs">Лекарства</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="sm:col-span-6 md:col-span-3 lg:col-span-2">
+                <h6 class="text-sm text-slate-50 font-medium mb-2">
+                    Правна информация
+                </h6>
+                <ul class="text-sm space-y-2">
+                    <li>
+                        <a
+                                class="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out"
+                                href="/terms-of-service">Условия за ползване</a>
+                    </li>
+                    <li>
+                        <a
+                                class="text-slate-400 hover:text-slate-200 transition duration-150 ease-in-out"
+                                href="/privacy-policy">Политика за поверителност</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>

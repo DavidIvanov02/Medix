@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="bg" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title th:replace="~{layout :: title('Добави осигуровка')}"></title>
+</head>
+
+<div layout:fragment="content" class="p-6 bg-gray-50 min-h-64">
+  <form th:action="@{/insurances/create}" method="post" th:object="${insurance}" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow">
+    <h1 class="text-2xl font-bold mb-4">Добави осигуровка</h1>
+    <div class="mb-4" th:unless="${isPatient}">
+      <label for="patient" class="block text-sm font-medium text-gray-700">Пациент</label>
+      <select
+              id="patient"
+              th:field="*{patientId}"
+              th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('patientId') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500">
+        <option value="">Избери пациент</option>
+        <option th:each="patient : ${patients}" th:value="${patient.id}" th:text="${patient.fullName}"></option>
+      </select>
+      <span th:if="${#fields.hasErrors('patientId')}" th:errors="*{patientId}" class="text-sm text-red-600 mt-1 block"></span>
+    </div>
+    <input type="hidden" th:if="isPatient" th:field="*{patientId}" />
+    <div class="mb-4">
+      <label for="sum" class="block text-sm font-medium text-gray-700">Сума</label>
+      <input
+              id="sum"
+              type="number"
+              th:field="*{sum}"
+              th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('sum') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      <span th:if="${#fields.hasErrors('sum')}" th:errors="*{sum}" class="text-sm text-red-600 mt-1 block"></span>
+    </div>
+    <div class="mb-4">
+      <label for="month" class="block text-sm font-medium text-gray-700">Месец</label>
+      <input
+              id="month"
+              type="number"
+              min="1"
+              max="12"
+              th:field="*{insuranceMonth}"
+              th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('insuranceMonth') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      <span th:if="${#fields.hasErrors('insuranceMonth')}" th:errors="*{insuranceMonth}" class="text-sm text-red-600 mt-1 block"></span>
+    </div>
+    <div class="mb-4">
+      <label for="year" class="block text-sm font-medium text-gray-700">Година</label>
+      <input
+              id="year"
+              type="number"
+              th:field="*{insuranceYear}"
+              th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('insuranceYear') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      <span th:if="${#fields.hasErrors('insuranceYear')}" th:errors="*{insuranceYear}" class="text-sm text-red-600 mt-1 block"></span>
+    </div>
+    <div class="mb-4">
+      <label for="date" class="block text-sm font-medium text-gray-700">Дата на плащане</label>
+      <input
+              id="date"
+              type="date"
+              th:field="*{dateOfPayment}"
+              th:class="'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500' + (${#fields.hasErrors('dateOfPayment') ? ' border-red-500 focus:ring-red-500 focus:border-red-500' : ''})"
+              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      <span th:if="${#fields.hasErrors('dateOfPayment')}" th:errors="*{dateOfPayment}" class="text-sm text-red-600 mt-1 block"></span>
+    </div>
+    <div>
+      <button
+              type="submit"
+              class="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+        <i class="fas fa-plus mr-2"></i> Добави осигуровка
+      </button>
+    </div>
+  </form>
+</div>
+</html>
